@@ -10,7 +10,7 @@ passport.use(new LocalStrategy(
   {
     usernameField: 'email',
     passwordFiedl: 'password',
-    passReqTocallback: true
+    passReqToCallback: true
   },
   // authenticate user
   (req, username, password, cb) => {
