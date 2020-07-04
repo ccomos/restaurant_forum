@@ -1,5 +1,6 @@
 const restController = require('../controllers/restController.js')
 const adminController = require('../controllers/adminController.js')
+const userController = require('../controllers/userController')
 
 module.exports = app => {
   //如果使用者訪問首頁，就導向 /restaurants 的頁面
@@ -11,4 +12,9 @@ module.exports = app => {
   app.get('/admin', (req, res) => res.redirect('/admin/restaurants'))
 
   app.get('/admin/restaurants', adminController.getRestaurants)
+
+  //user signup route controller
+  app.get('/signup', userController.signUpPage)
+  app.post('/signup', userController.signUp)
+
 }
