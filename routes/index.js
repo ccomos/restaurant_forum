@@ -1,6 +1,7 @@
 const restController = require('../controllers/restController.js')
 const adminController = require('../controllers/adminController.js')
 const userController = require('../controllers/userController')
+const categoryController = require('../controllers/categoryController.js')
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 
@@ -37,6 +38,8 @@ module.exports = (app, passport) => {
   //admin user manage user data route
   app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
   app.put('/admin/users/:id', authenticatedAdmin, adminController.putUsers)
+  //admin user manage categories data route
+  app.get('/admin/categories', authenticatedAdmin, categoryController.getCategories)
 
   //user signup route controller
   app.get('/signup', userController.signUpPage)
