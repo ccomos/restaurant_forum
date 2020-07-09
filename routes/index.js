@@ -40,6 +40,7 @@ module.exports = (app, passport) => {
   app.put('/admin/users/:id', authenticatedAdmin, adminController.putUsers)
   //admin user manage categories data route
   app.get('/admin/categories', authenticatedAdmin, categoryController.getCategories)
+  app.post('/admin/categories', authenticatedAdmin, categoryController.postCategories)
 
   //user signup route controller
   app.get('/signup', userController.signUpPage)
