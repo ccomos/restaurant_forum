@@ -5,11 +5,31 @@
   <div class="col-md-8">
     <h3>{{user.name}}</h3>
     <h4>{{user.email}}</h4>
+    <h6>{{commentCount}}已評論餐廳</h6>
+    <br />
+    <br />
+    <br />
+    <br />
     <a class="btn btn-primary" href="/users/{{user.id}}/edit">
       Edit
     </a>
   </div>
   <hr>
+</div>
+<br />
+<br />
+
+<h6>{{commentCount}}已評論餐廳</h6>
+<div class="row">
+  {{#each comment}}
+  <div class="col-md-1">
+    <a href="/restaurants/{{this.RestaurantId}}">
+      <div class="card mb-4 shadow-sm">
+        <img class="card-img-top" src="{{this.Restaurant.image}}" alt="Card image cap" width="80px" height="60px">
+      </div>
+    </a>
+  </div>
+  {{/each}}
 </div>
 <br />
 <br />
