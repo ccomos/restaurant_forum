@@ -10,6 +10,7 @@ module.exports = (app, passport) => {
   //設定user authenticate
   const authenticated = (req, res, next) => {
     if (req.isAuthenticated()) {
+      //console.log('authenticated ===', req._passport.session)
       return next()
     }
     res.redirect('/signin')
@@ -18,6 +19,13 @@ module.exports = (app, passport) => {
     if (req.isAuthenticated()) {
       if (req.user.isAdmin) { return next() }
       return res.redirect('/')
+    }
+    res.redirect('/signin')
+  }
+  const authenticatedUser = (req, res, next) => {
+    if (req.isAuthenticated()) {
+      if (req.user.id === Number(req.params.id)) { return next() }
+      return res.redirect(`/users/${req.user.id}`)
     }
     res.redirect('/signin')
   }
@@ -59,4 +67,9 @@ module.exports = (app, passport) => {
   app.get('/signin', userController.signInPage)
   app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
   app.get('/logout', userController.logout)
+
+  //user profile route controller
+  app.get('/users/:id', authenticatedUser, userController.getUser)
+  app.get('/users/:id/edit', authenticatedUser, userController.editUser)
+  app.put('/users/:id', authenticatedUser, upload.single('image'), userController.putUser) //must to add middleware of upload.single('') because of enctype="multipart/form-data"
 }
