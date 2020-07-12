@@ -78,6 +78,9 @@ module.exports = (app, passport) => {
 
   //user route
   app.get('/users/top', authenticated, userController.getTopUser)
+  //user follow route
+  app.post('/following/:userId', authenticated, userController.addFollowing)
+  app.delete('/following/:userId', authenticated, userController.removeFollowing)
   //user profile route controller
   app.get('/users/:id', authenticatedUser, userController.getUser)
   app.get('/users/:id/edit', authenticatedUser, userController.editUser)
