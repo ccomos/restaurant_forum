@@ -3,6 +3,7 @@ const Restaurant = db.Restaurants
 const Category = db.Category
 const Comment = db.Comment
 const User = db.User
+const Favorite = db.Favorite
 
 //const for pagination
 const pageLimit = 10
@@ -109,6 +110,29 @@ const restController = {
         restaurant: restaurant.toJSON(),
         commentCount: commentCount
       })
+    })
+  },
+
+  getTopRestaurant: (req, res) => {
+    // 撈出所有 Restaurant 與 favoritedUsers 資料
+    return Restaurant.findAll({
+      include: [
+        { model: User, as: 'FavoritedUsers' }
+      ]
+    }).then(restaurants => {
+      // 整理 restaurant 資料
+      restaurants = restaurants.map(restaurant => ({
+        ...restaurant.dataValues,
+        // 計算收藏人數
+        restaurantCount: restaurant.FavoritedUsers.length,
+        // 判斷目前登入使用者是否已追蹤該 restaurant
+        isFavorited: restaurant.FavoritedUsers.map(d => d.id).includes(req.user.id),
+        description: restaurant.description.substring(0, 50)
+      }))
+      // 依收藏數排序清單並取Top 10
+      restaurants = restaurants.sort((a, b) => b.restaurantCount - a.restaurantCount)
+      restaurants = restaurants.slice(0, 10)
+      return res.render('top', { restaurants: restaurants })
     })
   },
 
