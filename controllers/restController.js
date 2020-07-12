@@ -54,7 +54,8 @@ const restController = {
     return Restaurant.findByPk(req.params.id, {
       //include 清單當項目變多時需要改成用陣列
       include: [Category,
-        { model: Comment, include: [User] }
+        { model: Comment, include: [User] },
+        { model: User, as: 'FavoritedUsers' }
       ]
     }).then(restaurant => {
       //console.log(restaurant.toJSON())
@@ -62,7 +63,11 @@ const restController = {
       return restaurant.save({
         fields: ['viewCounts']
       }).then(restaurant => {
-        return res.render('restaurant', { restaurant: restaurant.toJSON() })
+        const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(req.user.id)
+        return res.render('restaurant', {
+          restaurant: restaurant.toJSON(),
+          isFavorited: isFavorited
+        })
       })
     })
   },
