@@ -31,6 +31,7 @@ const restController = {
         ...r.dataValues, //...展開運算子
         description: r.dataValues.description.substring(0, 50),
         isFavorited: req.user.FavoritedRestaurants.map(d => d.id).includes(r.id),
+        isLiked: req.user.LikedRestaurants.map(d => d.id).includes(r.id),
         categoryName: r.Category.name
       }))
       Category.findAll({
@@ -55,7 +56,8 @@ const restController = {
       //include 清單當項目變多時需要改成用陣列
       include: [Category,
         { model: Comment, include: [User] },
-        { model: User, as: 'FavoritedUsers' }
+        { model: User, as: 'FavoritedUsers' },
+        { model: User, as: 'LikedUsers' }
       ]
     }).then(restaurant => {
       //console.log(restaurant.toJSON())
@@ -64,9 +66,11 @@ const restController = {
         fields: ['viewCounts']
       }).then(restaurant => {
         const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(req.user.id)
+        const isLiked = restaurant.LikedUsers.map(d => d.id).includes(req.user.id)
         return res.render('restaurant', {
           restaurant: restaurant.toJSON(),
-          isFavorited: isFavorited
+          isFavorited: isFavorited,
+          isLiked: isLiked
         })
       })
     })
