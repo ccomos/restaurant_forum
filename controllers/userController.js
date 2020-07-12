@@ -60,9 +60,16 @@ const userController = {
       .then(user => {
         let comment = user.toJSON().Comments
         let commentCount = comment.length
+        let isUserSelf = false
+        if (req.user.id === Number(req.params.id)) { isUserSelf = true }
         //console.log('getUser, comment info :', user)
         //console.log('getUser, comment-res info :', user.toJSON().Comments[0].Restaurant)
-        return res.render('profile', { user: user.toJSON(), comment: comment, commentCount: commentCount })
+        return res.render('profile', {
+          user: user.toJSON(),
+          comment: comment,
+          commentCount: commentCount,
+          isUserSelf: isUserSelf
+        })
       })
   },
 

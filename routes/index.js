@@ -83,7 +83,7 @@ module.exports = (app, passport) => {
   app.post('/following/:userId', authenticated, userController.addFollowing)
   app.delete('/following/:userId', authenticated, userController.removeFollowing)
   //user profile route controller
-  app.get('/users/:id', authenticatedUser, userController.getUser)
+  app.get('/users/:id', authenticated, userController.getUser)
   app.get('/users/:id/edit', authenticatedUser, userController.editUser)
   app.put('/users/:id', authenticatedUser, upload.single('image'), userController.putUser) //must to add middleware of upload.single('') because of enctype="multipart/form-data"
 }
