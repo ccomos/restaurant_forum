@@ -145,7 +145,8 @@ const adminController = {
 
   getUsers: (req, res) => {
     return User.findAll({ raw: true }).then(users => {
-      return res.render('admin/users', { users: users })
+      let userID = req.user.id
+      return res.render('admin/users', { users: users, userID: userID })
     })
   },
 

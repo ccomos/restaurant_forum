@@ -24,7 +24,8 @@
       <td>admin</td>
       <td>
         <form action="/admin/users/{{this.id}}?_method=PUT" method="POST" style="display: inline;">
-          <button type="submit" class="btn btn-link">set as user</button>
+          <button type="submit" class="btn btn-link {{#ifCond this.id ../userID}}disabled{{/ifCond}}">set as
+            user</button>
         </form>
       </td>
       {{else}}
