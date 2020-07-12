@@ -152,7 +152,7 @@ const adminController = {
   putUsers: (req, res) => {
     return User.findByPk(req.params.id)
       .then((user) => {
-        if (user.email === 'root@example.com') {
+        if (user.email === 'root@example.com' | req.user.id === Number(req.params.id)) {
           req.flash('error_messages', "Can not change this user's item!")
           return res.redirect('/admin/users')
         }
