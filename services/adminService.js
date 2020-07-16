@@ -20,6 +20,7 @@ const adminService = {
         callback({ restaurant: restaurant })
       })
   },
+
 }
 
 module.exports = adminService
