@@ -39,7 +39,7 @@ const categoryService = {
           console.log(category)
           category.update(req.body) // =category.update({name:req.body.name})
             .then((category) => {
-              return callback({ status: 'success', message: '' })
+              return callback({ status: 'success', message: 'category was successfully updated' })
             })
         })
     }
@@ -50,7 +50,7 @@ const categoryService = {
       .then((category) => {
         category.destroy()
           .then((category) => {
-            return callback({ status: 'success', message: '' })
+            return callback({ status: 'success', message: 'category was successfully updated' })
           })
       })
   },

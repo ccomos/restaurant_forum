@@ -26,6 +26,7 @@ let categoryController = {
         req.flash('error_messages', data['message'])
         return res.redirect('back')
       }
+      req.flash('success_messages', data['message'])
       return res.redirect('/admin/categories')
     })
   },
