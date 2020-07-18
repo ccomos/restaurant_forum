@@ -21,19 +21,13 @@ let categoryController = {
   },
 
   putCategories: (req, res) => {
-    if (!req.body.name) {
-      req.flash('error_messages', 'name didn\'t exist')
-      return res.redirect('back')
-    } else {
-      return Category.findByPk(req.params.id)
-        .then((category) => {
-          console.log(category)
-          category.update(req.body) // =category.update({name:req.body.name})
-            .then((category) => {
-              res.redirect('/admin/categories')
-            })
-        })
-    }
+    categoryService.putCategories(req, res, (data) => {
+      if (data['status'] === 'error') {
+        req.flash('error_messages', data['message'])
+        return res.redirect('back')
+      }
+      return res.redirect('/admin/categories')
+    })
   },
 
   deleteCategories: (req, res) => {
