@@ -22,5 +22,11 @@ let categoryController = {
     })
   },
 
+  deleteCategories: (req, res) => {
+    categoryService.deleteCategories(req, res, (data) => {
+      return res.json(data)
+    })
+  },
+
 }
 module.exports = categoryController
